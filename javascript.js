@@ -69,3 +69,22 @@ numberButtonsArray.forEach((button) => {
     })
 })
 
+// Clears all equation variables and input window on click
+const clearButton = document.querySelector("#clearButton");
+clearButton.addEventListener("click", () => {
+    inputWindow.value = 0;
+    firstNum = 0;
+    secondNum = 0;
+    result = 0;
+});
+
+// Saves number as firstNum and selects operator for operate function based off of button selection
+const operationButtons = document.querySelectorAll(".operatorButton");
+let operationButtonsArray = Array.from(operationButtons);
+operationButtonsArray.forEach((button) => {
+    button.addEventListener("click", () => {
+        firstNum = inputWindow.value;
+        operator = button.textContent;
+        inputWindow.value = 0;
+    })
+});
