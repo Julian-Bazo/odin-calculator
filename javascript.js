@@ -47,6 +47,25 @@ const inputWindow = document.createElement('input');
 inputWindow.type = "text";
 inputWindow.disabled = true; // Input no longer editable
 inputWindow.value = 0;
+
 // Insert input window above calculator buttons
 const entireCalculator = document.querySelector("#inputContainer");
 entireCalculator.appendChild(inputWindow);
+
+// Create Array from node list of all number buttons
+const numberButtons = document.querySelectorAll(".numButton");
+let numberButtonsArray = Array.from(numberButtons);
+
+// Add number value of button clicked to input window
+// forEach to apply event to all number buttons
+numberButtonsArray.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (inputWindow.value === "0") {
+            inputWindow.value = button.textContent;
+        }
+        else {
+            inputWindow.value = inputWindow.value + button.textContent;
+        }
+    })
+})
+
