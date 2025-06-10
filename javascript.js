@@ -41,3 +41,12 @@ function operate(firstNum, operator, secondNum) {
         return division(firstNum, secondNum);
     }
 }
+
+// Initialize input window
+const inputWindow = document.createElement('input');
+inputWindow.type = "text";
+inputWindow.disabled = true; // Input no longer editable
+inputWindow.value = 0;
+// Insert input window above calculator buttons
+const entireCalculator = document.querySelector("#inputContainer");
+entireCalculator.appendChild(inputWindow);
