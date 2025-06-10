@@ -2,6 +2,8 @@
 
 // Addition function
 function addition(num1, num2) {
+    num1 = parseInt(num1);
+    num2 = parseInt(num2);
     let sum = num1 + num2;
     return sum;
 }
@@ -88,3 +90,9 @@ operationButtonsArray.forEach((button) => {
         inputWindow.value = 0;
     })
 });
+
+const equalsButton = document.querySelector("#equalsButton");
+equalsButton.addEventListener("click", () => {
+    secondNum = inputWindow.value;
+    inputWindow.value = operate(firstNum, operator, secondNum);
+})
