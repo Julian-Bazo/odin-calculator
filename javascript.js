@@ -27,7 +27,9 @@ function division(num1, num2) {
 let firstNum = 0;
 let secondNum = 0;
 let operator = `+`;
-let backupNum = 0;
+let operatorChecker = 0;
+let backupNum1 = 0;
+let backupNum2 = 0;
 let result = 0;
 
 // Operate function
@@ -53,6 +55,7 @@ function operate(firstNum, operator, secondNum) {
 // Initialize input window
 const inputWindow = document.createElement('input');
 inputWindow.type = "text";
+inputWindow.id = "inputWindow";
 inputWindow.disabled = true; // Input no longer editable
 inputWindow.value = 0;
 
@@ -68,7 +71,7 @@ let numberButtonsArray = Array.from(numberButtons);
 // forEach to apply event to all number buttons
 numberButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
-        if (inputWindow.value === "0") {
+        if (inputWindow.value === "0" || operatorChecker >= 2) {
             inputWindow.value = button.textContent;
         }
         else {
@@ -85,6 +88,7 @@ clearButton.addEventListener("click", () => {
     secondNum = 0;
     result = 0;
     backupNum = 0;
+    operatorChecker = 0;
 });
 
 // Saves number as firstNum and selects operator for operate function based off of button selection
@@ -92,15 +96,43 @@ const operationButtons = document.querySelectorAll(".operatorButton");
 let operationButtonsArray = Array.from(operationButtons);
 operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
-        firstNum = inputWindow.value;
+        operatorChecker++;
         operator = button.textContent;
+        console.log("Operator checker: " + operatorChecker);
+        if (operatorChecker === 2) {
+            // Try to figure out why it is not running an equation
+            // firstNum = backupNum;
+            secondNum = inputWindow.value;
+            result = operate(firstNum, operator, secondNum);
+            inputWindow.value = result;
+            backupNum1 = result;
+        }
+        else if (operatorChecker % 2 === 0 && operatorChecker > 3) {
+            firstNum = backupNum2;
+            secondNum = inputWindow.value;
+            result = operate(firstNum, operator, secondNum);
+            backupNum1 = result;
+            inputWindow.value = result;
+        }
+        else if (operatorChecker % 2 !== 0 && operatorChecker > 2) {
+            firstNum = backupNum1;
+            secondNum = inputWindow.value;
+            result = operate(firstNum, operator, secondNum);
+            backupNum2 = result;
+            inputWindow.value = result;
+        }
+
+        else {
+        firstNum = inputWindow.value;
         inputWindow.value = 0;
+        }
     })
 });
 
 const equalsButton = document.querySelector("#equalsButton");
 equalsButton.addEventListener("click", () => {
     secondNum = inputWindow.value;
+    operatorChecker = 0;
     if (firstNum !== 0 && secondNum !== 0) {
     result = operate(firstNum, operator, secondNum);
         if (result === Infinity) {
@@ -112,7 +144,6 @@ equalsButton.addEventListener("click", () => {
     firstNum = 0;
     secondNum = 0;
     inputWindow.value = result;
-    
     }
     // System checks
     console.log(typeof(result));
