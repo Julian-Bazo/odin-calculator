@@ -24,23 +24,29 @@ function division(num1, num2) {
 }
 
 // Initialization of Operator function variables with filler values
-let firstNum = 5;
-let secondNum = 3;
+let firstNum = 0;
+let secondNum = 0;
 let operator = `+`;
+let backupNum = 0;
+let result = 0;
 
 // Operate function
 function operate(firstNum, operator, secondNum) {
     if (operator === "+") {
-        return addition(firstNum, secondNum);
+        result = addition(firstNum, secondNum);
+        return result;
     }
     if (operator === "-") {
-        return subtraction(firstNum, secondNum);
+        result = subtraction(firstNum, secondNum);
+        return result;
     }
     if (operator === "*" || operator === "x") {
-        return multiplication(firstNum, secondNum);
+        result = multiplication(firstNum, secondNum);
+        return result;
     }
     if (operator === "/") {
-        return division(firstNum, secondNum);
+        result = division(firstNum, secondNum);
+        return result;
     }
 }
 
@@ -78,6 +84,7 @@ clearButton.addEventListener("click", () => {
     firstNum = 0;
     secondNum = 0;
     result = 0;
+    backupNum = 0;
 });
 
 // Saves number as firstNum and selects operator for operate function based off of button selection
@@ -94,5 +101,27 @@ operationButtonsArray.forEach((button) => {
 const equalsButton = document.querySelector("#equalsButton");
 equalsButton.addEventListener("click", () => {
     secondNum = inputWindow.value;
-    inputWindow.value = operate(firstNum, operator, secondNum);
+    if (firstNum !== 0 && secondNum !== 0) {
+    result = operate(firstNum, operator, secondNum);
+        if (result === Infinity) {
+            result = 0;
+            alert("Cannot divide by 0!");
+            // result = 0;
+        }
+
+    firstNum = 0;
+    secondNum = 0;
+    inputWindow.value = result;
+    
+    }
+    // System checks
+    console.log(typeof(result));
+    console.log("firstNum: " + firstNum);
+    console.log("operator: " + operator);
+    console.log("secondNum: " + secondNum);
+    console.log("result: " + result);
 })
+
+// if (inputWindow.textContent === 0 ) {
+//     inputWindow.textContent.style.opacity = 
+// }
