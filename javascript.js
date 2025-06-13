@@ -2,8 +2,8 @@
 
 // Addition function
 function addition(num1, num2) {
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
     let sum = num1 + num2;
     return sum;
 }
@@ -74,6 +74,10 @@ let numberButtonsArray = Array.from(numberButtons);
 // forEach to apply event to all number buttons
 numberButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
+        console.log(button.textContent);
+        if (inputWindow.value === "0" && button.textContent === ".") {
+            inputWindow.value = 0.;
+        }
         if (inputWindow.value === "0" && button.textContent !== "." || operatorChecker >= 2 && numberPressedChecker === 0) {
             inputWindow.value = button.textContent;
             numberPressedChecker = 1;
@@ -167,6 +171,9 @@ equalsButton.addEventListener("click", () => {
     // result = operate(firstNum, operator, secondNum);
     // firstNum = 0;
     // secondNum = 0;
+    if (result % 1 !== 0) {
+        result = parseFloat(result.toPrecision(3));
+    }
     inputWindow.value = result;
     
     // System checks
