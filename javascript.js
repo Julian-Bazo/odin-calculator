@@ -28,6 +28,7 @@ let firstNum = 0;
 let secondNum = 0;
 let operator = `+`;
 let operatorChecker = 0;
+let numberPressedChecker = 0;
 let backupNum1 = 0;
 let backupNum2 = 0;
 let result = 0;
@@ -73,12 +74,14 @@ let numberButtonsArray = Array.from(numberButtons);
 // forEach to apply event to all number buttons
 numberButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
-        if (inputWindow.value === "0" || operatorChecker >= 2) {
+        if (inputWindow.value === "0" && button.textContent !== "." || operatorChecker >= 2 && numberPressedChecker === 0) {
             inputWindow.value = button.textContent;
+            numberPressedChecker = 1;
         }
-        else {
+        else if (numberPressedChecker === 1) {
             inputWindow.value = inputWindow.value + button.textContent;
         }
+        console.log("numberPressedChecker: " + numberPressedChecker);
     })
 })
 
@@ -95,6 +98,7 @@ let operationButtonsArray = Array.from(operationButtons);
 operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         operatorChecker++;
+        numberPressedChecker = 0;
         operator = button.textContent;
         // add backup Operator
         console.log("Operator checker: " + operatorChecker);
@@ -142,6 +146,7 @@ const equalsButton = document.querySelector("#equalsButton");
 equalsButton.addEventListener("click", () => {
     // secondNum = inputWindow.value;
     console.log(operatorChecker);
+    numberPressedChecker = 0;
     if(operatorChecker === 0) {
         alert("ERROR: Two numbers were not received");
     }
@@ -184,3 +189,6 @@ function resetGlobals() {
     backupOperator2 = "+";
     operatorChecker = 0;
 }
+
+// Make it so that the decimal button works (can no longer base inputwindow.value = 0 as erase)
+// Make it so that numbers greater than 9 can be used in repeat operations
