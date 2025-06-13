@@ -77,6 +77,7 @@ numberButtonsArray.forEach((button) => {
         console.log(button.textContent);
         if (inputWindow.value === "0" && button.textContent === ".") {
             inputWindow.value = 0.;
+            numberPressedChecker = 1;
         }
         if (inputWindow.value === "0" && button.textContent !== "." || operatorChecker >= 2 && numberPressedChecker === 0) {
             inputWindow.value = button.textContent;
