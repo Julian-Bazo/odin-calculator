@@ -140,21 +140,30 @@ operationButtonsArray.forEach((button) => {
 
 const equalsButton = document.querySelector("#equalsButton");
 equalsButton.addEventListener("click", () => {
-    secondNum = inputWindow.value;
-    operatorChecker = 0;
-    if (firstNum !== 0 && secondNum !== 0) {
-
-    result = operate(firstNum, operator, secondNum);
-        if (result === Infinity) {
+    // secondNum = inputWindow.value;
+    console.log(operatorChecker);
+    if(operatorChecker === 0) {
+        alert("ERROR: Two numbers were not received");
+    }
+    if (operatorChecker === 1) {
+        secondNum = inputWindow.value;
+        result = operate(firstNum, operator, secondNum);
+    }
+    if (operatorChecker > 1) {
+        secondNum = inputWindow.value;
+        result = operate(result, operator, secondNum);
+    }
+    if (result === Infinity) {
             result = 0;
             alert("Cannot divide by 0!");
+            resetGlobals();
             // result = 0;
-        }
-
-    firstNum = 0;
-    secondNum = 0;
-    inputWindow.value = result;
     }
+    // result = operate(firstNum, operator, secondNum);
+    // firstNum = 0;
+    // secondNum = 0;
+    inputWindow.value = result;
+    
     // System checks
     console.log(typeof(result));
     console.log("firstNum: " + firstNum);
@@ -163,7 +172,7 @@ equalsButton.addEventListener("click", () => {
     console.log("result: " + result);
 })
 
-// Function to clear everything
+// Function to clear all global variables
 function resetGlobals() {
     firstNum = 0;
     secondNum = 0;
@@ -175,7 +184,3 @@ function resetGlobals() {
     backupOperator2 = "+";
     operatorChecker = 0;
 }
-
-
-// Try to make it so the operator buttons display
-// When I press the operator button the second time it uses the operator that was pushed previously
