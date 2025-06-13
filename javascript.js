@@ -23,7 +23,7 @@ function division(num1, num2) {
     return quotient;
 }
 
-// Initialization of Operator function variables with filler values
+// Initialization of all global variables
 let firstNum = 0;
 let secondNum = 0;
 let operator = `+`;
@@ -31,6 +31,8 @@ let operatorChecker = 0;
 let backupNum1 = 0;
 let backupNum2 = 0;
 let result = 0;
+let backupOperator1 = "+";
+let backupOperator2 = "+";
 
 // Operate function
 function operate(firstNum, operator, secondNum) {
@@ -84,11 +86,7 @@ numberButtonsArray.forEach((button) => {
 const clearButton = document.querySelector("#clearButton");
 clearButton.addEventListener("click", () => {
     inputWindow.value = 0;
-    firstNum = 0;
-    secondNum = 0;
-    result = 0;
-    backupNum = 0;
-    operatorChecker = 0;
+    resetGlobals();
 });
 
 // Saves number as firstNum and selects operator for operate function based off of button selection
@@ -98,26 +96,37 @@ operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         operatorChecker++;
         operator = button.textContent;
+        // add backup Operator
         console.log("Operator checker: " + operatorChecker);
+        if (operatorChecker === 1) {
+            backupOperator1 = operator;
+        }
+        // Calculates result of first two numbers if an operation sign is selected instead of the equals sign
         if (operatorChecker === 2) {
-            // Try to figure out why it is not running an equation
             // firstNum = backupNum;
             secondNum = inputWindow.value;
-            result = operate(firstNum, operator, secondNum);
+            backupOperator2 = operator;
+            result = operate(firstNum, backupOperator1, secondNum);
             inputWindow.value = result;
             backupNum1 = result;
         }
+        // Allows for repeat calculations without using the equals sign
+        // Saves the result in a backup variable that will allow "odd" numbered calls of the operator button to calculate correctly
         else if (operatorChecker % 2 === 0 && operatorChecker > 3) {
             firstNum = backupNum2;
             secondNum = inputWindow.value;
-            result = operate(firstNum, operator, secondNum);
+            backupOperator2 = operator;
+            result = operate(firstNum, backupOperator1, secondNum);
             backupNum1 = result;
             inputWindow.value = result;
         }
+        // Allows for repeat calculations while added a secondary backup number so that the results change accordingly
+        // i.e. each "even" calculation utilizes "odd" calculation results
         else if (operatorChecker % 2 !== 0 && operatorChecker > 2) {
             firstNum = backupNum1;
             secondNum = inputWindow.value;
-            result = operate(firstNum, operator, secondNum);
+            backupOperator1 = operator;
+            result = operate(firstNum, backupOperator2, secondNum);
             backupNum2 = result;
             inputWindow.value = result;
         }
@@ -134,6 +143,7 @@ equalsButton.addEventListener("click", () => {
     secondNum = inputWindow.value;
     operatorChecker = 0;
     if (firstNum !== 0 && secondNum !== 0) {
+
     result = operate(firstNum, operator, secondNum);
         if (result === Infinity) {
             result = 0;
@@ -153,6 +163,19 @@ equalsButton.addEventListener("click", () => {
     console.log("result: " + result);
 })
 
-// if (inputWindow.textContent === 0 ) {
-//     inputWindow.textContent.style.opacity = 
-// }
+// Function to clear everything
+function resetGlobals() {
+    firstNum = 0;
+    secondNum = 0;
+    result = 0;
+    backupNum1 = 0;
+    backupNum2 = 0;
+    operator = "+";
+    backupOperator1 = "+";
+    backupOperator2 = "+";
+    operatorChecker = 0;
+}
+
+
+// Try to make it so the operator buttons display
+// When I press the operator button the second time it uses the operator that was pushed previously
