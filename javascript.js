@@ -102,6 +102,7 @@ let operationButtonsArray = Array.from(operationButtons);
 operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         operatorChecker++;
+        // resets to 0 so next number button pressed clears the inputWindow
         numberPressedChecker = 0;
         operator = button.textContent;
         // add backup Operator
@@ -115,6 +116,9 @@ operationButtonsArray.forEach((button) => {
             secondNum = inputWindow.value;
             backupOperator2 = operator;
             result = operate(firstNum, backupOperator1, secondNum);
+            if (result % 1 !== 0) {
+                result = parseFloat(result.toPrecision(3));
+            }
             inputWindow.value = result;
             backupNum1 = result;
         }
@@ -125,6 +129,9 @@ operationButtonsArray.forEach((button) => {
             secondNum = inputWindow.value;
             backupOperator2 = operator;
             result = operate(firstNum, backupOperator1, secondNum);
+            if (result % 1 !== 0) {
+                result = parseFloat(result.toPrecision(3));
+            }
             backupNum1 = result;
             inputWindow.value = result;
         }
@@ -135,6 +142,9 @@ operationButtonsArray.forEach((button) => {
             secondNum = inputWindow.value;
             backupOperator1 = operator;
             result = operate(firstNum, backupOperator2, secondNum);
+            if (result % 1 !== 0) {
+                result = parseFloat(result.toPrecision(3));
+            }
             backupNum2 = result;
             inputWindow.value = result;
         }
@@ -197,5 +207,4 @@ function resetGlobals() {
     operatorChecker = 0;
 }
 
-// Make it so that the decimal button works (can no longer base inputwindow.value = 0 as erase)
-// Make it so that numbers greater than 9 can be used in repeat operations
+// Make it so decimal button initially sets value to 0.;
