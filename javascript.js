@@ -34,6 +34,7 @@ let backupNum2 = 0;
 let result = 0;
 let backupOperator1 = "+";
 let backupOperator2 = "+";
+let equalsChecker = 0;
 
 // Operate function
 function operate(firstNum, operator, secondNum) {
@@ -86,6 +87,16 @@ numberButtonsArray.forEach((button) => {
         else if (numberPressedChecker === 1) {
             inputWindow.value = inputWindow.value + button.textContent;
         }
+        if (equalsChecker === 1) {
+            if (button.textContent === ".") {
+                numberPressedChecker = 1;
+                inputWindow.value = 0;
+                inputWindow.value = inputWindow.value + 0.;
+            }
+            inputWindow.value = button.textContent;
+            equalsChecker = 0;
+            numberPressedChecker = 1;
+        }
         console.log("numberPressedChecker: " + numberPressedChecker);
     })
 })
@@ -113,7 +124,6 @@ operationButtonsArray.forEach((button) => {
         }
         // Calculates result of first two numbers if an operation sign is selected instead of the equals sign
         if (operatorChecker === 2) {
-            // firstNum = backupNum;
             secondNum = inputWindow.value;
             backupOperator2 = operator;
             result = operate(firstNum, backupOperator1, secondNum);
@@ -159,7 +169,6 @@ operationButtonsArray.forEach((button) => {
 
 const equalsButton = document.querySelector("#equalsButton");
 equalsButton.addEventListener("click", () => {
-    // secondNum = inputWindow.value;
     console.log(operatorChecker);
     numberPressedChecker = 0;
     if(operatorChecker === 0) {
@@ -177,15 +186,13 @@ equalsButton.addEventListener("click", () => {
             result = 0;
             alert("Cannot divide by 0!");
             resetGlobals();
-            // result = 0;
     }
-    // result = operate(firstNum, operator, secondNum);
-    // firstNum = 0;
-    // secondNum = 0;
     if (result % 1 !== 0) {
         result = parseFloat(result.toPrecision(3));
     }
     inputWindow.value = result;
+    resetGlobals();
+    equalsChecker = 1;
     
     // System checks
     console.log(typeof(result));
@@ -206,6 +213,11 @@ function resetGlobals() {
     backupOperator1 = "+";
     backupOperator2 = "+";
     operatorChecker = 0;
+    numberPressedChecker = 0;
 }
 
-// Make it so decimal button initially sets value to 0.;
+// Make it so that operator buttons are unresponsive after an operator has been selected
+// Make it so that operator buttons become responsive after another number has been input
+
+// Add on number button press after result is shown
+    // Wipes result and starts anew.
