@@ -76,6 +76,9 @@ let numberButtonsArray = Array.from(numberButtons);
 numberButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         console.log(button.textContent);
+        if (button.textContent === ".") {
+            toggleDecimalButton(decimalBehavior);
+        }
         if (inputWindow.value === "0" && button.textContent === ".") {
             inputWindow.value = 0.;
             numberPressedChecker = 1;
@@ -111,6 +114,31 @@ clearButton.addEventListener("click", () => {
     resetGlobals();
 });
 
+// Initialize disable/enable checker for decimal button
+let decimalBehavior = 0;
+let decimalButton = document.querySelector("#decimalButton");
+
+// Function for disabling and enabling decimal button
+function toggleDecimalButton(num) {
+    num = decimalBehavior;
+        
+    if (decimalBehavior === 0) {
+        decimalButton.disabled = true;
+    }
+    else if (decimalBehavior === 1) {
+        decimalButton.disabled = false;
+    }
+
+    // Alternates value on function call
+    if (decimalBehavior === 0) {
+        decimalBehavior = 1;
+    }
+    else if (decimalBehavior === 1) {
+        decimalBehavior = 0;
+    }
+}
+
+// Initialize disable/enable checker for operator buttons
 let buttonBehavior = 0;
 
 // Function for disabling and enabling operator buttons
@@ -141,6 +169,9 @@ let operationButtonsArray = Array.from(operationButtons);
 operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         operatorChecker++;
+        if (decimalBehavior === 1) {
+        toggleDecimalButton(decimalBehavior);
+        }
         toggleOperatorButton(buttonBehavior);
         // resets to 0 so next number button pressed clears the inputWindow
         numberPressedChecker = 0;
@@ -244,10 +275,11 @@ function resetGlobals() {
     numberPressedChecker = 0;
     buttonBehavior = 1;
     toggleOperatorButton(buttonBehavior);
+    decimalBehavior = 1;
+    toggleDecimalButton(decimalBehavior);
 }
 
-// Make it so that operator buttons are unresponsive after an operator has been selected
-// Make it so that operator buttons become responsive after another number has been input
-
-// Add on number button press after result is shown
-    // Wipes result and starts anew.
+// TO DO
+// Add a DEL key that undoes last input without having to full clear
+// Add keyboard functionality
+    // Keyboard presses relate directly to button.textContent
