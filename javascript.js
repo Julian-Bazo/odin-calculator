@@ -97,6 +97,9 @@ numberButtonsArray.forEach((button) => {
             equalsChecker = 0;
             numberPressedChecker = 1;
         }
+        if (buttonBehavior === 1) {
+            toggleOperatorButton(buttonBehavior);
+        }
         console.log("numberPressedChecker: " + numberPressedChecker);
     })
 })
@@ -108,12 +111,37 @@ clearButton.addEventListener("click", () => {
     resetGlobals();
 });
 
+let buttonBehavior = 0;
+
+// Function for disabling and enabling operator buttons
+function toggleOperatorButton(num) {
+    num = buttonBehavior;
+    operationButtonsArray.forEach((button) => {
+        
+        if (buttonBehavior === 0) {
+            button.disabled = true;
+        }
+        else if (buttonBehavior === 1) {
+            button.disabled = false;
+        }
+
+    })
+    // Alternates value on function call
+    if (buttonBehavior === 0) {
+        buttonBehavior = 1;
+    }
+    else if (buttonBehavior === 1) {
+        buttonBehavior = 0;
+    }
+}
+
 // Saves number as firstNum and selects operator for operate function based off of button selection
 const operationButtons = document.querySelectorAll(".operatorButton");
 let operationButtonsArray = Array.from(operationButtons);
 operationButtonsArray.forEach((button) => {
     button.addEventListener("click", () => {
         operatorChecker++;
+        toggleOperatorButton(buttonBehavior);
         // resets to 0 so next number button pressed clears the inputWindow
         numberPressedChecker = 0;
         operator = button.textContent;
@@ -214,6 +242,8 @@ function resetGlobals() {
     backupOperator2 = "+";
     operatorChecker = 0;
     numberPressedChecker = 0;
+    buttonBehavior = 1;
+    toggleOperatorButton(buttonBehavior);
 }
 
 // Make it so that operator buttons are unresponsive after an operator has been selected
