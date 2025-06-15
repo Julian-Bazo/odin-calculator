@@ -337,11 +337,6 @@ document.addEventListener("keydown", (e) => {
     if (key === "q") clearButton.click();
 });
 
-
-
-
 // TO DO
-// Add keyboard functionality
-    // Keyboard presses relate directly to button.textContent
 // Add CSS styles to website
 // Potential delete key bug fixes
