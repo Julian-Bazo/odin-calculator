@@ -279,16 +279,66 @@ function resetGlobals() {
     toggleDecimalButton(decimalBehavior);
 }
 
-
+// Selection of delete button from HTML
 const deleteButton = document.querySelector("#deleteButton");
+// Event listener variable initialization
 let wholeNumber = "";
 let finalNumber = "";
+// Removes the last digit in the string of inputWindow.value
 deleteButton.addEventListener("click", () => {
     wholeNumber = inputWindow.value.toString();
     finalNumber = wholeNumber.substring(0, (wholeNumber.length - 1));
     finalNumber = Number(finalNumber);
     inputWindow.value = finalNumber;
 })
+
+// Selection of all buttons through the DOM
+const oneButton = document.querySelector("#one");
+const twoButton = document.querySelector("#two");
+const threeButton = document.querySelector("#three");
+const fourButton = document.querySelector("#four");
+const fiveButton = document.querySelector("#five");
+const sixButton = document.querySelector("#six");
+const sevenButton = document.querySelector("#seven");
+const eightButton = document.querySelector("#eight");
+const nineButton = document.querySelector("#nine");
+const zeroButton = document.querySelector("#zero");
+
+const additionButton = document.querySelector("#additionButton");
+const subtractionButton = document.querySelector("#subtractionButton");
+const multiplicationButton = document.querySelector("#multiplicationButton");
+const divisionButton = document.querySelector("#divisionButton");
+
+// NOTE: Delete, clear, decimal, and equals defined earlier in document
+
+// Event listener to add simulate corresponding button on keydown
+let key  = 0;
+document.addEventListener("keydown", (e) => {
+    key = e.key
+    if (key === "0") zeroButton.click();
+    if (key === "1") oneButton.click();
+    if (key === "2") twoButton.click();
+    if (key === "3") threeButton.click();
+    if (key === "4") fourButton.click();
+    if (key === "5") fiveButton.click();
+    if (key === "6") sixButton.click();
+    if (key === "7") sevenButton.click();
+    if (key === "8") eightButton.click();
+    if (key === "9") nineButton.click();
+    
+    if (key === "+") additionButton.click();
+    if (key === "-") subtractionButton.click();
+    if (key === "*" || key === "x") multiplicationButton.click();
+    if (key === "/") divisionButton.click();
+
+    if (key === "Enter") equalsButton.click();
+    if (key === "Backspace") deleteButton.click();
+    if (key === ".") decimalButton.click();
+    if (key === "q") clearButton.click();
+});
+
+
+
 
 // TO DO
 // Add keyboard functionality
