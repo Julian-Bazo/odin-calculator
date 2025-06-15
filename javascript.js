@@ -279,7 +279,19 @@ function resetGlobals() {
     toggleDecimalButton(decimalBehavior);
 }
 
+
+const deleteButton = document.querySelector("#deleteButton");
+let wholeNumber = "";
+let finalNumber = "";
+deleteButton.addEventListener("click", () => {
+    wholeNumber = inputWindow.value.toString();
+    finalNumber = wholeNumber.substring(0, (wholeNumber.length - 1));
+    finalNumber = Number(finalNumber);
+    inputWindow.value = finalNumber;
+})
+
 // TO DO
-// Add a DEL key that undoes last input without having to full clear
 // Add keyboard functionality
     // Keyboard presses relate directly to button.textContent
+// Add CSS styles to website
+// Potential delete key bug fixes
